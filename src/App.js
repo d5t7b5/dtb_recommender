@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import cosineSimilarity from "cosine-similarity";
 import './MovieRecommender.css';
 
-const API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMjVkYmVjNzVhNTUxMzI1NDI3ZTI3NWZmNmY5M2JiMiIsIm5iZiI6MTczNzkxNTQxMi4zMTUsInN1YiI6IjY3OTY3YzE0YTZlNDEyODNmMTJiMTE5MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QfE6lBaS-oEJE8wk_w1zbJ_xnhL0msO0VdEfKX7TUPU";
-const HUGGING_FACE_TOKEN = "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";
+const API_TOKEN = "TOKEN";
+const HUGGING_FACE_TOKEN = "TOKEN";
 
 
 const emotionToGenre = {
