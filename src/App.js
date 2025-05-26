@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import cosineSimilarity from "cosine-similarity";
 import './MovieRecommender.css';
 
-const API_TOKEN = "TOKEN";
-const HUGGING_FACE_TOKEN = "TOKEN";
+const API_TOKEN = "yJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMjVkYmVjNzVhNTUxMzI1NDI3ZTI3NWZmNmY5M2JiMiIsIm5iZiI6MTczNzkxNTQxMi4zMTUsInN1YiI6IjY3OTY3YzE0YTZlNDEyODNmMTJiMTE5MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QfE6lBaS-oEJE8wk_w1zbJ_xnhL0msO0VdEfKX7TUPU";
+const HUGGING_FACE_TOKEN = "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";
 
 
 const emotionToGenre = {
@@ -105,13 +105,13 @@ const MovieRecommender = () => {
 
   const handleEmotionSubmit = async () => {
     if (!genreMap || Object.keys(genreMap).length === 0) {
-      alert("Los géneros aún no han sido cargados. Intenta de nuevo.");
+      alert("The genres have not been loaded yet. Please try again.");
       return;
     }
   
     const analyzedEmotion = await analyzeEmotion(emotion);
       if (!analyzedEmotion) {
-      alert("No se puede recomendar películas para la emoción detectada.");
+      alert("Movies cannot be recommended for the emotion detected.");
       return;
     }
   
@@ -122,7 +122,7 @@ const MovieRecommender = () => {
     });
 
     if (!analyzedEmotion) {
-      alert("No se puede recomendar películas para la emoción detectada. Mostrando comedias...");
+      alert("Can't recommend movies based on the emotion detected. Showing comedies...");
       fetchMovies([35]).then(setMovies);
       return;
     }    
@@ -132,14 +132,14 @@ const MovieRecommender = () => {
   const handleRegenerateMovies = async () => {
     if (!emotion) return;
     
-    console.log("Regenerando nuevas películas...");
+    console.log("Regenerating new films...");
     
     const analyzedEmotion = await analyzeEmotion(emotion, genreMap);
 
     if (!analyzedEmotion || analyzedEmotion === "neutral") {
-      alert("Se ha detectado una emoción neutral. Recomendando películas de comedia...");
+      alert("A neutral emotion has been detected. Recommending comedy movies...");
       fetchMovies([35]).then((movies) => {
-        console.log("Películas de comedia obtenidas:", movies); 
+        console.log("Comedy Movies Awarded:", movies); 
         setMovies(movies);
         setHasGeneratedMovies(true);
       });
@@ -148,7 +148,7 @@ const MovieRecommender = () => {
 
 
     if (!analyzedEmotion) {
-      alert("No se puede recomendar películas para la emoción detectada.");
+      alert("Movies cannot be recommended for the emotion detected.");
       return;
     }
     
@@ -156,13 +156,13 @@ const MovieRecommender = () => {
     fetchMovies(genres).then((movies) => {
       const sortedMovies = rankMoviesBySimilarity(movies, watchedMovies);
       setMovies(sortedMovies);
-      console.log("Nuevas películas generadas:", sortedMovies);
+      console.log("New movies generated:", sortedMovies);
     });
   };
 
 
   const markAsWatched = (movie) => {
-    console.log("Película marcada como vista:", movie.title);
+    console.log("Movie marked as watched:", movie.title);
   
     setWatchedMovies((prev) => {
       const updatedMovies = [...prev, movie];
@@ -222,8 +222,8 @@ const MovieRecommender = () => {
 />
 {isLoggedIn && (
   <div>
-    <button onClick={() => setCurrentTab("recommend")}>Recomendar Películas</button>
-    <button onClick={() => setCurrentTab("watched")}>Películas Vistas</button>
+    <button onClick={() => setCurrentTab("recommend")}>Recommend Movies</button>
+    <button onClick={() => setCurrentTab("watched")}>Watched Movies</button>
   </div>
 )}
 {isLoggedIn && currentTab === "recommend" &&(
@@ -234,7 +234,7 @@ const MovieRecommender = () => {
       value={emotion} 
       onChange={(e) => setEmotion(e.target.value)} 
     />
-    <button onClick={handleEmotionSubmit}>Buscar Películas</button>
+    <button onClick={handleEmotionSubmit}>Search Movies</button>
 
     {isLoggedIn && currentTab === "recommend" && hasGeneratedMovies && (
       <div>
