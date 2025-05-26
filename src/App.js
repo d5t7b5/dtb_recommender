@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import cosineSimilarity from "cosine-similarity";
 import './MovieRecommender.css';
 
-const API_TOKEN = "yJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMjVkYmVjNzVhNTUxMzI1NDI3ZTI3NWZmNmY5M2JiMiIsIm5iZiI6MTczNzkxNTQxMi4zMTUsInN1YiI6IjY3OTY3YzE0YTZlNDEyODNmMTJiMTE5MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QfE6lBaS-oEJE8wk_w1zbJ_xnhL0msO0VdEfKX7TUPU";
-const HUGGING_FACE_TOKEN = "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";
+const API_TOKEN = "TOKEN";
+const HUGGING_FACE_TOKEN = "TOKEN";
 
 
 const emotionToGenre = {
@@ -45,7 +45,7 @@ async function analyzeEmotion(text) {
 
 
 const fetchGenres = async () => {
-  const res = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=es", {
+  const res = await fetch("https://api.themoviedb.org/3/genre/movie/list?language=en", {
     headers: { Authorization: `Bearer ${API_TOKEN}` },
   });
 
@@ -139,7 +139,7 @@ const MovieRecommender = () => {
     if (!analyzedEmotion || analyzedEmotion === "neutral") {
       alert("A neutral emotion has been detected. Recommending comedy movies...");
       fetchMovies([35]).then((movies) => {
-        console.log("Comedy Movies Awarded:", movies); 
+        console.log("Comedy films obtained:", movies); 
         setMovies(movies);
         setHasGeneratedMovies(true);
       });
@@ -156,13 +156,13 @@ const MovieRecommender = () => {
     fetchMovies(genres).then((movies) => {
       const sortedMovies = rankMoviesBySimilarity(movies, watchedMovies);
       setMovies(sortedMovies);
-      console.log("New movies generated:", sortedMovies);
+      console.log("Nuevas películas generadas:", sortedMovies);
     });
   };
 
 
   const markAsWatched = (movie) => {
-    console.log("Movie marked as watched:", movie.title);
+    console.log("Película marcada como vista:", movie.title);
   
     setWatchedMovies((prev) => {
       const updatedMovies = [...prev, movie];
@@ -223,7 +223,7 @@ const MovieRecommender = () => {
 {isLoggedIn && (
   <div>
     <button onClick={() => setCurrentTab("recommend")}>Recommend Movies</button>
-    <button onClick={() => setCurrentTab("watched")}>Watched Movies</button>
+    <button onClick={() => setCurrentTab("watched")}>Movies Viewed</button>
   </div>
 )}
 {isLoggedIn && currentTab === "recommend" &&(
@@ -238,7 +238,7 @@ const MovieRecommender = () => {
 
     {isLoggedIn && currentTab === "recommend" && hasGeneratedMovies && (
       <div>
-        <button onClick={handleRegenerateMovies}>Generar Nuevas Películas</button>
+        <button onClick={handleRegenerateMovies}>Generate New Movies</button>
         <table border="1">
           <thead>
             <tr>
